@@ -13,7 +13,6 @@ import java.net.URL;
  */
 
 public class MyAsyncTask extends AsyncTask {
-
     private static final String url = "https://www.google.com/";
     String stringResponse = "";
     public NetworkCHeck networkCHeck = null;
