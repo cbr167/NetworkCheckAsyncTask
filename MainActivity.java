@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView numberText;
     private Button plusButton;
     private Button minusButton;
-    private int presentValue = 0;
+    private float presentValue = 0;
     private String updatedNumber;
     private Boolean autoIncrement = false;
     private Boolean autoDecrement = false;
@@ -57,6 +57,8 @@ public class MainActivity extends AppCompatActivity {
             return false;
         });
 
+
+        
         minusButton.setOnTouchListener((view, motionEvent) -> {
 
             if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
@@ -69,8 +71,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void clickMinus() {
-        autoIncrement = false;
+
         if (presentValue > 0) {
+            presentValue =  presentValue + 0.1f;
             presentValue--;
             updatedNumber = String.valueOf(presentValue);
             numberText.setText(updatedNumber);
@@ -82,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void clickPlus() {
+
         presentValue = presentValue + 1;
         updatedNumber = String.valueOf(presentValue);
         numberText.setText(updatedNumber);
