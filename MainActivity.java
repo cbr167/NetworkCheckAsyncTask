@@ -17,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView numberText;
     private Button plusButton;
     private Button minusButton;
+    private Button networkCheck;
     private float presentValue = 0;
     private String updatedNumber;
     private Boolean autoIncrement = false;
@@ -32,7 +33,16 @@ public class MainActivity extends AppCompatActivity {
         numberText = (TextView) findViewById(R.id.intUpdate);
         minusButton = (Button) findViewById(R.id.minusButton);
         plusButton = (Button) findViewById(R.id.plusButton);
+        networkCheck = (Button) findViewById(R.id.test);
+        networkCheck.setOnClickListener(view -> {
 
+            if (new CheckNetwork(MainActivity.this).isNetworkAvailable()) {
+                new MyAsyncTask(response -> numberText.setText(response)).execute();
+            } else {
+                Toast.makeText(getApplicationContext(), "NO internet", Toast.LENGTH_LONG).show();
+                numberText.setText("No Internet");
+            }
+        });
 
 //minusButton.setOnClickListener(view -> clickMinus());
 //plusButton.setOnClickListener(view -> clickPlus());
@@ -56,9 +66,6 @@ public class MainActivity extends AppCompatActivity {
             }
             return false;
         });
-
-
-        
         minusButton.setOnTouchListener((view, motionEvent) -> {
 
             if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
@@ -71,25 +78,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void clickMinus() {
-
         if (presentValue > 0) {
-            presentValue =  presentValue + 0.1f;
+            presentValue = presentValue + 0.1f;
             presentValue--;
             updatedNumber = String.valueOf(presentValue);
             numberText.setText(updatedNumber);
         }
-
     }
-
-
-
-
     private void clickPlus() {
-
         presentValue = presentValue + 1;
         updatedNumber = String.valueOf(presentValue);
         numberText.setText(updatedNumber);
-        Log.d("incrnumber", String.valueOf(presentValue));
+        Log.d("incrementnumber", String.valueOf(presentValue));
     }
 
     class RptUpdater implements Runnable {
